@@ -1,0 +1,183 @@
+/* PixelArchive — OLED high-contrast design system.
+   Tailwind utilities handle color; this file defines the shared component
+   classes ONCE (buttons, inputs, cards, chips, nav) so pages never reinvent them. */
+
+[x-cloak] { display: none !important; }
+
+html { color-scheme: dark; }
+body { background: #000000; }
+
+::selection { background: rgba(34, 211, 238, .3); color: #fff; }
+
+* { scrollbar-width: thin; scrollbar-color: #262626 transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: #262626; border-radius: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- Buttons ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .5rem 1rem;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    border-radius: .5rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .05s ease;
+    white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-primary { background: #06b6d4; color: #000; }
+.btn-primary:hover:not(:disabled) { background: #22d3ee; }
+
+.btn-secondary { background: #171717; color: #f5f5f5; border-color: #262626; }
+.btn-secondary:hover:not(:disabled) { background: #262626; }
+
+.btn-danger { background: transparent; color: #f87171; border-color: rgba(248, 113, 113, .4); }
+.btn-danger:hover:not(:disabled) { background: rgba(239, 68, 68, .12); border-color: #ef4444; }
+
+.btn-ghost { background: transparent; color: #a3a3a3; }
+.btn-ghost:hover:not(:disabled) { color: #fff; background: #171717; }
+
+.btn-sm { padding: .375rem .75rem; font-size: .8125rem; }
+
+.btn-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: .5rem;
+    color: #e5e5e5;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+.btn-icon:hover { background: #171717; }
+
+/* ---------- Forms ---------- */
+.input, .select {
+    width: 100%;
+    background: #0f0f0f;
+    color: #fafafa;
+    border: 1px solid #262626;
+    border-radius: .5rem;
+    padding: .5rem .75rem;
+    font-size: .875rem;
+    outline: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.input:focus-visible, .select:focus-visible {
+    border-color: #22d3ee;
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, .2);
+}
+.input::placeholder { color: #525252; }
+.select { appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .5rem center;
+    background-size: 1rem;
+    padding-right: 2rem;
+}
+.label {
+    display: block;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #a3a3a3;
+    margin-bottom: .375rem;
+}
+
+/* ---------- Cards ---------- */
+.card {
+    background: #0a0a0a;
+    border: 1px solid #262626;
+    border-radius: .5rem;
+    transition: border-color .15s ease;
+}
+.card:hover { border-color: #404040; }
+
+/* ---------- Tag chips ---------- */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    padding: .125rem .625rem;
+    font-size: .75rem;
+    line-height: 1.125rem;
+    border-radius: 9999px;
+    background: #171717;
+    border: 1px solid #262626;
+    color: #d4d4d4;
+    transition: all .15s ease;
+    cursor: pointer;
+}
+.chip:hover { border-color: #22d3ee; color: #22d3ee; background: rgba(34, 211, 238, .06); }
+
+/* ---------- Navigation ---------- */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .625rem .75rem;
+    border-radius: .5rem;
+    font-size: .875rem;
+    font-weight: 500;
+    transition: background-color .15s ease, color .15s ease;
+}
+.nav-item.active { border-left-color: #22d3ee !important; }
+
+/* ---------- Player ---------- */
+.seek, .volume {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 9999px;
+    background: #404040;
+    cursor: pointer;
+}
+.seek::-webkit-slider-thumb, .volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #22d3ee;
+    border: none;
+    margin-top: -4px;
+}
+.seek::-moz-range-thumb, .volume::-moz-range-thumb {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #22d3ee;
+    border: none;
+}
+video::-webkit-media-controls { display: none !important; }
+
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: .5rem;
+    background: rgba(0, 0, 0, .6);
+    border: 1px solid #262626;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+.nav-arrow:hover { background: rgba(34, 211, 238, .2); }
+
+.hidden-panel { position: absolute; left: 0; right: 0; z-index: 20; }
+
+/* Mobile sidebar drawer */
+@media (max-width: 1023px) {
+    aside[role="complementary"], aside.drawer-open { display: flex !important; }
+}
