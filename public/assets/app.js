@@ -159,7 +159,7 @@
 
     window.videoControls = (item, next, context) => ({
         item, next, context,
-        playing: false, currentTime: 0, duration: 0, volume: 1,
+        playing: false, currentTime: 0, duration: 0, volume: 1, lastVolume: 1,
         showNext: false, countdown: 5, timer: null, openSettings: false,
         init() {
             this.$watch('volume', () => this.setVolume());
@@ -169,7 +169,7 @@
                 else if (event.key === 'ArrowLeft') this.$refs.video.currentTime = Math.max(0, this.currentTime - 5);
                 else if (event.key === 'ArrowRight') this.$refs.video.currentTime = Math.min(this.duration, this.currentTime + 5);
                 else if (event.key.toLowerCase() === 'f') this.fullscreen();
-                else if (event.key.toLowerCase() === 'm') this.volume = this.volume ? 0 : 1;
+                else if (event.key.toLowerCase() === 'm') this.toggleMute();
             });
         },
         syncTime() {
@@ -180,10 +180,21 @@
             if (this.$refs.video.paused) this.$refs.video.play().catch(() => toast('Unable to play this video.', true));
             else this.$refs.video.pause();
         },
+        skip(seconds) {
+            const video = this.$refs.video;
+            video.currentTime = Math.max(0, Math.min(video.duration || Infinity, video.currentTime + seconds));
+        },
         seek() { this.$refs.video.currentTime = Number(this.currentTime); },
-        setVolume() { if (this.$refs.video) this.$refs.video.volume = Number(this.volume); },
+        setVolume() {
+            if (!this.$refs.video) return;
+            this.$refs.video.volume = Number(this.volume);
+            if (this.volume > 0) this.lastVolume = Number(this.volume);
+        },
+        toggleMute() {
+            this.volume = this.volume > 0 ? 0 : this.lastVolume || 1;
+        },
         fullscreen() {
-            const element = this.$refs.video.parentElement;
+            const element = this.$refs.player;
             if (document.fullscreenElement) document.exitFullscreen();
             else element.requestFullscreen?.();
         },
